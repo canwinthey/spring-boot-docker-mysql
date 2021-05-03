@@ -1,0 +1,20 @@
+version: '3'
+services:
+  docker-mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=test
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+  final-app:
+    image: users-mysql-app
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - 9000:8090
+    depends_on:
+      - docker-mysql
+    links:
+      - docker-mysql:mysql
