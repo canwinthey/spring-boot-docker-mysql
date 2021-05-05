@@ -35,7 +35,7 @@ Get:http://192.168.99.100:9000/all
 
 POST:-http://192.168.99.100:9000/save
   {
-        "empName": "RAJASEKHAR REDDY",
+        "empName": "ahana",
         "salary": 50000.3
     }
 
