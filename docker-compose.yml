@@ -1,14 +1,23 @@
 version: '3'
 services:
   docker-mysql:
-    image: mysql:5.7
+    image: mysql:latest
+    container_name: docker-mysql
+    ports:
+      - "3306:3306"
+    restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=test
       - MYSQL_USER=user
       - MYSQL_PASSWORD=password
+    volumes:
+      - C:/voldata:/var/lib/mysql
+    networks:
+      - employee-network
   final-app:
     image: users-mysql-app
+    container_name: final-app
     build:
       context: ./
       dockerfile: Dockerfile
@@ -16,5 +25,10 @@ services:
       - 9000:8090
     depends_on:
       - docker-mysql
-    links:
-      - docker-mysql:mysql
+    environment:
+      WAIT_HOSTS: docker-mysql:3306
+    networks:
+      - employee-network
+
+networks:
+  employee-network:
